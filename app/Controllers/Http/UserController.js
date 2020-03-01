@@ -6,11 +6,11 @@ class UserController {
 
   async register({ request, response, auth }) {
 
-    const { username, email, password } = request.body;
+    const { username, email, password, tel } = request.body;
 
     try {
 
-      const user = await User.create({ username, email, password });
+      const user = await User.create({ username, email, password, tel });
       const token = await auth.generate(user)
 
       return response.send({ user, token: token.token });
@@ -41,11 +41,12 @@ class UserController {
       return response.status(401).send({ message: "Usuário não encontrado!" })
     }
 
-    const { username, email, password } = request.body;
+    const { username, email, password, tel } = request.body;
 
     user.username = username;
     user.email = email;
     user.password = password;
+    user.tel = tel;
 
     try {
       await user.save();
