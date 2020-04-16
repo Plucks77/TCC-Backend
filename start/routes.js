@@ -1,4 +1,4 @@
-'use strict'
+"use strict";
 
 /*
 |--------------------------------------------------------------------------
@@ -14,10 +14,19 @@
 */
 
 /** @type {typeof import('@adonisjs/framework/src/Route/Manager')} */
-const Route = use('Route')
-
-Route.post('/register', "UserController.register")
-Route.post('/login', "UserController.login")
-Route.get('/show', "UserController.show")
-Route.put('/edit/:id', "UserController.edit").middleware('auth')
-Route.delete('/delete/:id', "UserController.delete").middleware('auth')
+const Route = use("Route");
+//user
+Route.post("/register", "UserController.register");
+Route.post("/login", "UserController.login");
+Route.get("/show", "UserController.show");
+Route.put("/edit/:id", "UserController.edit").middleware("auth");
+Route.delete("/delete/:id", "UserController.delete").middleware("auth");
+//guia
+Route.post("/register/guia", "GuiaController.register");
+Route.put("/edit/guia/:id", "GuiaController.edit");
+Route.delete("/delete/guia/:id", "GuiaController.delete");
+Route.get("/show/guia", "GuiaController.show");
+Route.get("/evaluations/guia/:id", "GuiaController.evaluations");
+//evaluation
+Route.post("/register/evaluation", "EvaluationController.register");
+Route.get("/show/evaluation", "EvaluationController.show");
