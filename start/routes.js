@@ -30,3 +30,9 @@ Route.get("/evaluations/guia/:id", "GuiaController.evaluations");
 //evaluation
 Route.post("/register/evaluation", "EvaluationController.register");
 Route.get("/show/evaluation", "EvaluationController.show");
+//category
+Route.post("/register/category", "CategoryController.register");
+Route.put("/edit/category/:id", "CategoryController.edit");
+Route.delete("/delete/category/:id", "CategoryController.delete");
+Route.get("/show/category/:id", "CategoryController.show");
+//pacote
