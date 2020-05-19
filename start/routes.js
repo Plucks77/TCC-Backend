@@ -21,6 +21,7 @@ Route.post("/login", "UserController.login");
 Route.get("/show", "UserController.show");
 Route.put("/edit/:id", "UserController.edit").middleware("auth");
 Route.delete("/delete/:id", "UserController.delete").middleware("auth");
+Route.get("/user/:id", "UserController.user").middleware("auth");
 //guia
 Route.post("/register/guia", "GuiaController.register");
 Route.put("/edit/guia/:id", "GuiaController.edit");

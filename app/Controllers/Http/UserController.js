@@ -70,6 +70,15 @@ class UserController {
 
     response.send(users);
   }
+
+  async user({ request, response }) {
+    const user = await User.find(request.params.id);
+
+    if (!user) {
+      return response.status(401).send({ message: "Usuário não encontrado!" });
+    }
+    return response.send(user);
+  }
 }
 
 module.exports = UserController;
