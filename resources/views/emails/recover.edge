@@ -1,0 +1,14 @@
+<h1>Recuperar sua senha</h1>
+<p>
+  Olá {{ user.username }}, parece que alguém requisitou uma troca de senha
+  para sua conta registrada com o e-mail {{ user.email }}.
+</p>
+
+<p>
+  Se foi você, apenas clique neste 
+<a href="http://localhost:3000/forgotpassword/{{token}}/{{user.id}}">link</a>
+</p>
+
+<p>
+  Se não foi você, recomendamos que troque sua senha.
+</p>
