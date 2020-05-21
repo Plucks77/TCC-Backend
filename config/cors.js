@@ -17,7 +17,7 @@ module.exports = {
   |
   */
   // origin: false,
-  origin: ["https://valetour.herokuapp.com/"],
+  origin: true,
 
   /*
   |--------------------------------------------------------------------------
