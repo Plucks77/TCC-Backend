@@ -3,6 +3,7 @@ const User = use("App/Models/User");
 const ForgotPassword = use("App/Models/ForgotPassword");
 const Mail = use("Mail");
 const crypto = require("crypto");
+const Database = use("Database");
 
 class ForgotPasswordController {
   async create({ request, response }) {
@@ -46,7 +47,11 @@ class ForgotPasswordController {
 
     try {
       user.password = request.body.password;
-      user.save();
+      await user.save();
+      await Database.raw(
+        `DELETE FROM forgot_passwords WHERE user_id='${user.id}'`
+      );
+
       return response.send(user);
     } catch (e) {
       return response.status(404).send({ erro: e });
