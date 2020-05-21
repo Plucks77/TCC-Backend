@@ -7,7 +7,7 @@ const Database = use("Database");
 
 class ForgotPasswordController {
   async create({ request, response }) {
-    const user = await User.find(request.params.id);
+    const user = await User.findByOrFail("email", request.body.email);
 
     if (!user) {
       return response.status(401).send({ message: "Usuário não encontrado!" });
@@ -18,7 +18,7 @@ class ForgotPasswordController {
 
     await Mail.send("emails.recover", { user, token }, (message) => {
       message
-        .from("d9d0697d37-6be663@inbox.mailtrap.io")
+        .from("suporte.valetour@gmail.com")
         .to(user.email)
         .subject("Troca de senha da sua conta ValeTour");
     });

@@ -23,9 +23,7 @@ Route.put("/edit/:id", "UserController.edit").middleware("auth");
 Route.delete("/delete/:id", "UserController.delete").middleware("auth");
 Route.get("/user/:id", "UserController.user").middleware("auth");
 //forgot password
-Route.post("/forgotpassword/:id", "ForgotPasswordController.create").middleware(
-  "auth"
-);
+Route.post("/forgotpassword", "ForgotPasswordController.create");
 Route.post("/validate", "ForgotPasswordController.validate");
 Route.put("/changepassword/:id", "ForgotPasswordController.change");
 //guia
