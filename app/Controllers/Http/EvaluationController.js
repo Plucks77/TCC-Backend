@@ -4,10 +4,10 @@ const Eva = use("App/Models/Evaluation");
 
 class EvaluationController {
   async register({ request, response }) {
-    const { guia_id, description, stars } = request.body;
+    const { guia_id, description, rating } = request.body;
 
     try {
-      const eva = await Eva.create({ guia_id, description, stars });
+      const eva = await Eva.create({ guia_id, description, rating });
 
       return response.send({ eva });
     } catch (e) {

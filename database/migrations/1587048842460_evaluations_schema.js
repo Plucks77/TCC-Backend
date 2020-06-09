@@ -9,7 +9,7 @@ class AvaliacoesGuiasSchema extends Schema {
       table.increments();
       table.integer("guia_id").unsigned().references("id").inTable("guias");
       table.string("description", 350).notNullable();
-      table.integer("stars").notNullable();
+      table.integer("rating").notNullable();
       table.timestamps();
     });
   }
