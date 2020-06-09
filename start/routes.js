@@ -12,35 +12,47 @@
 | http://adonisjs.com/docs/4.1/routing
 |
 */
-
 /** @type {typeof import('@adonisjs/framework/src/Route/Manager')} */
 const Route = use("Route");
-//user
+//User
 Route.post("/register", "UserController.register");
 Route.post("/login", "UserController.login");
 Route.get("/show", "UserController.show");
 Route.put("/edit/:id", "UserController.edit").middleware("auth");
 Route.delete("/delete/:id", "UserController.delete").middleware("auth");
 Route.get("/user/:id", "UserController.user").middleware("auth");
-//Admin
-Route.post("/admin/register", "AdminController.register");
-Route.post("/admin/login", "AdminController.login");
+
+
 //forgot password
 Route.post("/forgotpassword", "ForgotPasswordController.create");
 Route.post("/validate", "ForgotPasswordController.validate");
 Route.put("/changepassword/:id", "ForgotPasswordController.change");
-//guia
-Route.post("/register/guia", "GuiaController.register");
-Route.put("/edit/guia/:id", "GuiaController.edit");
-Route.delete("/delete/guia/:id", "GuiaController.delete");
-Route.get("/show/guia", "GuiaController.show");
-Route.get("/evaluations/guia/:id", "GuiaController.evaluations");
-//evaluation
+
+
+//Admin
+Route.post("/admin/register", "AdminController.register");
+Route.post("/admin/login", "AdminController.login");
+
+
+//Guia
+Route.post("/register/guia", "GuiaController.register").middleware("auth:admin");
+Route.put("/edit/guia/:id", "GuiaController.edit").middleware("auth:admin");
+Route.delete("/delete/guia/:id", "GuiaController.delete").middleware("auth:admin");
+Route.get("/show/guia", "GuiaController.show").middleware("auth:admin");
+Route.get("/evaluations/guia/:id", "GuiaController.evaluations").middleware("auth:admin");;
+Route.get("/rating/guia/:id", "GuiaController.rating").middleware("auth:admin");;
+
+
+//Evaluation
 Route.post("/register/evaluation", "EvaluationController.register");
 Route.get("/show/evaluation", "EvaluationController.show");
+
+
 //category
-Route.post("/register/category", "CategoryController.register");
-Route.put("/edit/category/:id", "CategoryController.edit");
-Route.delete("/delete/category/:id", "CategoryController.delete");
-Route.get("/show/category/:id", "CategoryController.show");
+Route.post("/register/category", "CategoryController.register").middleware("auth:admin");
+Route.put("/edit/category/:id", "CategoryController.edit").middleware("auth:admin");
+Route.delete("/delete/category/:id", "CategoryController.delete").middleware("auth:admin");
+Route.get("/show/category/:id", "CategoryController.show").middleware("auth:admin");
+
+
 //pacote
