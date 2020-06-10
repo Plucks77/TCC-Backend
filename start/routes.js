@@ -56,3 +56,8 @@ Route.get("/show/category/:id", "CategoryController.show").middleware("auth:admi
 
 
 //pacote
+Route.post("/pacote/create", "PacoteController.create").middleware("auth:admin");
+Route.put("/pacote/edit/:id", "PacoteController.edit").middleware("auth:admin");
+Route.delete("/pacote/delete/:id", "PacoteController.delete").middleware("auth:admin");
+Route.get("/pacote/:id", "PacoteController.show").middleware("auth:admin");
+Route.get("/pacotes", "PacoteController.list").middleware("auth:admin");
