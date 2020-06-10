@@ -38,7 +38,7 @@ Route.post("/admin/login", "AdminController.login");
 Route.post("/register/guia", "GuiaController.register").middleware("auth:admin");
 Route.put("/edit/guia/:id", "GuiaController.edit").middleware("auth:admin");
 Route.delete("/delete/guia/:id", "GuiaController.delete").middleware("auth:admin");
-Route.get("/show/guia", "GuiaController.show").middleware("auth:admin");
+Route.get("/list/guias", "GuiaController.list").middleware("auth:admin");
 Route.get("/evaluations/guia/:id", "GuiaController.evaluations").middleware("auth:admin");;
 Route.get("/rating/guia/:id", "GuiaController.rating").middleware("auth:admin");;
 

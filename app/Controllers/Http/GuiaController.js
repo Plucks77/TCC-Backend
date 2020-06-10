@@ -77,10 +77,28 @@ class GuiaController {
     return response.send({ media });
   }
 
-  async show({ response }) {
-    const guias = await Guia.all();
+  async list({ response }) {
+    const guias = await Guia.query().with("evaluations").fetch();
+    const serializedGuias = guias.toJSON();
+    const returnedGuias = [];
 
-    response.send(guias);
+    serializedGuias.map((guia) => {
+      guia.media = 0;
+      guia.evaluations.map((eva) => {
+        guia.media += eva.rating;
+      });
+      guia.media = guia.media / guia.evaluations.length;
+
+      returnedGuias.push({
+        id: guia.id,
+        name: guia.name,
+        description: guia.description,
+        tel: guia.tel,
+        media: guia.media,
+      });
+    });
+
+    return response.send(returnedGuias);
   }
 }
 
