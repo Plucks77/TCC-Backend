@@ -100,6 +100,36 @@ class GuiaController {
 
     return response.send(returnedGuias);
   }
+
+  async show({ request, response }) {
+    const guia = await Guia.query()
+      .where("id", request.params.id)
+      .with("evaluations")
+      .first();
+
+    if (!guia) {
+      return response.status(404).send({ message: "Guia não encontrado!" });
+    }
+
+    const serializedGuia = guia.toJSON();
+    let media = 0;
+
+    serializedGuia.evaluations.map((eva) => {
+      media += eva.rating;
+    });
+
+    media = media / serializedGuia.evaluations.length;
+
+    console.log(media);
+
+    return response.send({
+      id: guia.id,
+      name: guia.name,
+      description: guia.description,
+      tel: guia.tel,
+      media,
+    });
+  }
 }
 
 module.exports = GuiaController;
