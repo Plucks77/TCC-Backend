@@ -120,8 +120,6 @@ class GuiaController {
 
     media = media / serializedGuia.evaluations.length;
 
-    console.log(media);
-
     return response.send({
       id: guia.id,
       name: guia.name,
