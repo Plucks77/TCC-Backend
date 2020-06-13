@@ -71,6 +71,17 @@ class CategoryController {
       return response.status(404).send({ erro: e });
     }
   }
+
+  async list({ request, response }) {
+    const categories = await Category.all();
+
+    if (!categories) {
+      return response
+        .status(404)
+        .send({ message: "Ocorreu algum problema na busca das categorias!" });
+    }
+    return response.send(categories);
+  }
 }
 
 module.exports = CategoryController;

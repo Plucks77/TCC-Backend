@@ -54,6 +54,7 @@ Route.post("/register/category", "CategoryController.register").middleware("auth
 Route.put("/edit/category/:id", "CategoryController.edit").middleware("auth:admin");
 Route.delete("/delete/category/:id", "CategoryController.delete").middleware("auth:admin");
 Route.get("/show/category/:id", "CategoryController.show").middleware("auth:admin");
+Route.get("/list/category/", "CategoryController.list").middleware("auth:admin");
 
 
 //pacote
