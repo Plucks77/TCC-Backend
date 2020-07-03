@@ -18,7 +18,7 @@ class EvaluationController {
   async show({ response }) {
     const eva = await Eva.all();
 
-    response.send(eva);
+    return response.send(eva);
   }
 }
 
