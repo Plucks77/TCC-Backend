@@ -6,25 +6,29 @@ class PacoteController {
     const {
       category_id,
       guia_id,
+      local_id,
       name,
       description,
       price,
       date,
+      image_url,
     } = request.body;
 
     try {
       const pacote = await Pacote.create({
         category_id,
         guia_id,
+        local_id,
         name,
         description,
         price,
         date,
+        image_url,
       });
 
       return response.send({ pacote });
     } catch (e) {
-      return response.status(406).send({ erro: e });
+      return response.status(406).send(e.message);
     }
   }
 
@@ -38,25 +42,29 @@ class PacoteController {
     const {
       category_id,
       guia_id,
+      local_id,
       name,
       description,
       price,
       date,
+      image_url,
     } = request.body;
 
     pacote.category_id = category_id;
     pacote.guia_id = guia_id;
+    pacote.local_id = local_id;
     pacote.name = name;
     pacote.description = description;
     pacote.price = price;
     pacote.date = date;
+    pacote.image_url = image_url;
 
     try {
       await pacote.save();
 
       return response.send(pacote);
     } catch (e) {
-      return response.status(404).send({ erro: e });
+      return response.status(404).send(e.message);
     }
   }
 
@@ -72,7 +80,7 @@ class PacoteController {
 
       return response.send({ message: "Pacote excluído com sucesso!" });
     } catch (e) {
-      return response.status(404).send({ erro: e });
+      return response.status(404).send(e.message);
     }
   }
 
