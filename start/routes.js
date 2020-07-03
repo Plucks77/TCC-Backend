@@ -23,7 +23,7 @@ Route.delete("/user/delete/:id", "UserController.delete").middleware("auth");
 Route.get("/user/:id", "UserController.user").middleware("auth");
 
 
-//forgot password
+//Forgot Password
 Route.post("/forgotpassword", "ForgotPasswordController.create");
 Route.post("/validate", "ForgotPasswordController.validate");
 Route.put("/changepassword/:id", "ForgotPasswordController.change");
@@ -49,7 +49,7 @@ Route.post("/evaluation/register", "EvaluationController.register");
 Route.get("/evaluation/show", "EvaluationController.show");
 
 
-//category
+//Category
 Route.post("/category/register", "CategoryController.register").middleware("auth:admin");
 Route.put("/category/edit/:id", "CategoryController.edit").middleware("auth:admin");
 Route.delete("/category/delete/:id", "CategoryController.delete").middleware("auth:admin");
@@ -57,7 +57,7 @@ Route.get("/category/show/:id", "CategoryController.show").middleware("auth:admi
 Route.get("/category/list/", "CategoryController.list").middleware("auth:admin");
 
 
-//pacote
+//Pacote
 Route.post("/pacote/create", "PacoteController.create").middleware("auth:admin");
 Route.put("/pacote/edit/:id", "PacoteController.edit").middleware("auth:admin");
 Route.delete("/pacote/delete/:id", "PacoteController.delete").middleware("auth:admin");
