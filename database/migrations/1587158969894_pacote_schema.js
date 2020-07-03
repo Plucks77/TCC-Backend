@@ -13,10 +13,12 @@ class PacoteSchema extends Schema {
         .references("id")
         .inTable("categories");
       table.integer("guia_id").unsigned().references("id").inTable("guias");
+      table.integer("local_id").unsigned().references("id").inTable("locals");
       table.string("name", 80).notNullable();
       table.string("description", 80).notNullable();
       table.string("price", 80).notNullable();
       table.string("date", 80).notNullable();
+      table.string("image_url").notNullable();
       table.timestamps();
     });
   }
