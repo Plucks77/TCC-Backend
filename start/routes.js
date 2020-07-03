@@ -69,3 +69,4 @@ Route.get("/cities", "CityController.list");
 
 //Local
 Route.get("/locals", "LocalController.list");
+Route.get("/local/city/:id", "LocalController.filtered");
