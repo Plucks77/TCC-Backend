@@ -65,7 +65,7 @@ class UserController {
     }
   }
 
-  async show({ response }) {
+  async list({ response }) {
     const users = await User.all();
 
     response.send(users);

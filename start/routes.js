@@ -15,11 +15,11 @@
 /** @type {typeof import('@adonisjs/framework/src/Route/Manager')} */
 const Route = use("Route");
 //User
-Route.post("/register", "UserController.register");
-Route.post("/login", "UserController.login");
-Route.get("/show", "UserController.show");
-Route.put("/edit/:id", "UserController.edit").middleware("auth");
-Route.delete("/delete/:id", "UserController.delete").middleware("auth");
+Route.post("/user/register", "UserController.register");
+Route.post("/user/login", "UserController.login");
+Route.get("/user/list", "UserController.list");
+Route.put("/user/edit/:id", "UserController.edit").middleware("auth");
+Route.delete("/user/delete/:id", "UserController.delete").middleware("auth");
 Route.get("/user/:id", "UserController.user").middleware("auth");
 
 
@@ -35,26 +35,26 @@ Route.post("/admin/login", "AdminController.login");
 
 
 //Guia
-Route.post("/register/guia", "GuiaController.register").middleware("auth:admin");
-Route.put("/edit/guia/:id", "GuiaController.edit").middleware("auth:admin");
-Route.delete("/delete/guia/:id", "GuiaController.delete").middleware("auth:admin");
-Route.get("/list/guias", "GuiaController.list").middleware("auth:admin");
-Route.get("/show/guia/:id", "GuiaController.show").middleware("auth:admin");
-Route.get("/evaluations/guia/:id", "GuiaController.evaluations").middleware("auth:admin");;
-Route.get("/rating/guia/:id", "GuiaController.rating").middleware("auth:admin");;
+Route.post("/guia/register", "GuiaController.register").middleware("auth:admin");
+Route.put("/guia/edit/:id", "GuiaController.edit").middleware("auth:admin");
+Route.delete("/guia/delete/:id", "GuiaController.delete").middleware("auth:admin");
+Route.get("/guia/list", "GuiaController.list").middleware("auth:admin");
+Route.get("/guia/:id", "GuiaController.show").middleware("auth:admin");
+Route.get("/guia/evaluations/:id", "GuiaController.evaluations").middleware("auth:admin");;
+Route.get("/guia/rating/:id", "GuiaController.rating").middleware("auth:admin");;
 
 
 //Evaluation
-Route.post("/register/evaluation", "EvaluationController.register");
-Route.get("/show/evaluation", "EvaluationController.show");
+Route.post("/evaluation/register", "EvaluationController.register");
+Route.get("/evaluation/show", "EvaluationController.show");
 
 
 //category
-Route.post("/register/category", "CategoryController.register").middleware("auth:admin");
-Route.put("/edit/category/:id", "CategoryController.edit").middleware("auth:admin");
-Route.delete("/delete/category/:id", "CategoryController.delete").middleware("auth:admin");
-Route.get("/show/category/:id", "CategoryController.show").middleware("auth:admin");
-Route.get("/list/category/", "CategoryController.list").middleware("auth:admin");
+Route.post("/category/register", "CategoryController.register").middleware("auth:admin");
+Route.put("/category/edit/:id", "CategoryController.edit").middleware("auth:admin");
+Route.delete("/category/delete/:id", "CategoryController.delete").middleware("auth:admin");
+Route.get("/category/show/:id", "CategoryController.show").middleware("auth:admin");
+Route.get("/category/list/", "CategoryController.list").middleware("auth:admin");
 
 
 //pacote
