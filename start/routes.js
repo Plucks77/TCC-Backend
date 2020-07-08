@@ -63,7 +63,7 @@ Route.put("/pacote/edit/:id", "PacoteController.edit").middleware("auth:admin");
 Route.delete("/pacote/delete/:id", "PacoteController.delete").middleware("auth:admin");
 Route.get("/pacote/:id", "PacoteController.show").middleware("auth:admin");
 Route.get("/pacotes", "PacoteController.list").middleware("auth:admin");
-Route.get("/pacote/local/:id", "PacoteController.filtered").middleware("auth:admin");
+Route.get("/pacote/local/:id", "PacoteController.filtered").middleware("auth");
 
 //City
 Route.get("/cities", "CityController.list").middleware("auth");;
