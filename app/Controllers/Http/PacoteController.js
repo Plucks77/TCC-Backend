@@ -93,6 +93,35 @@ class PacoteController {
       })
       .fetch();
 
+    const json = pacote.toJSON();
+    const city_id = json[0].local.city_id;
+    const {
+      id,
+      category_id,
+      guia_id,
+      local_id,
+      name,
+      description,
+      price,
+      date,
+      image_url,
+    } = json[0];
+
+    const serializedData = {
+      id,
+      category_id,
+      guia_id,
+      city_id,
+      local_id,
+      name,
+      description,
+      price,
+      date,
+      image_url,
+    };
+
+    return response.send(serializedData);
+
     if (!pacote) {
       return response.status(401).send({ message: "Pacote não encontrado!" });
     }
