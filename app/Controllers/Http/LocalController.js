@@ -19,6 +19,12 @@ class LocalController {
       return response.status(404).send(e.message);
     }
   }
+
+  async show({ request, response }) {
+    const local = await Local.find(request.params.id);
+
+    return response.send(local);
+  }
 }
 
 module.exports = LocalController;
