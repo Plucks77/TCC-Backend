@@ -104,6 +104,29 @@ class PacoteController {
 
     return response.send(pacotes);
   }
+
+  async filtered({ request, response }) {
+    //Retorna o id, nome, descrição, preço, nome da categoria, url da foto dos pacotes filtrados pelo id de um local
+
+    try {
+      const pacotes = await Pacote.query()
+        .where("pacotes.local_id", "=", request.params.id)
+        .select([
+          "pacotes.id",
+          "pacotes.name",
+          "pacotes.description",
+          "pacotes.price",
+          "c.name as category_name",
+          "pacotes.image_url",
+        ])
+        .join("categories as c", "c.id", "pacotes.category_id")
+        .fetch();
+
+      return response.send(pacotes);
+    } catch (e) {
+      return response.status(400).send({ erro: e });
+    }
+  }
 }
 
 module.exports = PacoteController;
