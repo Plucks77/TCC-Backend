@@ -66,9 +66,9 @@ Route.get("/pacotes", "PacoteController.list").middleware("auth:admin");
 Route.get("/pacote/local/:id", "PacoteController.filtered").middleware("auth:admin,auth:jwt");
 
 //City
-Route.get("/cities", "CityController.list").middleware("auth:admin,auth:jwt");;
+Route.get("/cities", "CityController.list").middleware("auth:admin,auth:jwt");
 
 //Local
-Route.get("/locals", "LocalController.list").middleware("auth:admin,auth:jwt");;
-Route.get("/local/city/:id", "LocalController.filtered").middleware("auth:admin,auth:jwt");;
-Route.get("/local/:id", "LocalController.show").middleware("auth:admin,auth:jwt");;
+Route.get("/locals", "LocalController.list").middleware("auth:admin,auth:jwt");
+Route.get("/local/city/:id", "LocalController.filtered").middleware("auth:admin,auth:jwt");
+Route.get("/local/:id", "LocalController.show").middleware("auth:admin,auth:jwt");

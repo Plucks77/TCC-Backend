@@ -1,5 +1,6 @@
 "use strict";
 const Pacote = use("App/Models/Pacote");
+const Local = use("App/Models/Local");
 
 class PacoteController {
   async create({ request, response }) {
@@ -85,7 +86,12 @@ class PacoteController {
   }
 
   async show({ request, response }) {
-    const pacote = await Pacote.find(request.params.id);
+    const pacote = await Pacote.query()
+      .where("id", "=", request.params.id)
+      .with("local", (builder) => {
+        builder.select("id", "city_id");
+      })
+      .fetch();
 
     if (!pacote) {
       return response.status(401).send({ message: "Pacote não encontrado!" });
