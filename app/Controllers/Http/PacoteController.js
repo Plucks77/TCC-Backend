@@ -93,6 +93,10 @@ class PacoteController {
       })
       .fetch();
 
+    if (!pacote) {
+      return response.status(401).send({ message: "Pacote não encontrado!" });
+    }
+
     const json = pacote.toJSON();
     const city_id = json[0].local.city_id;
     const {
@@ -121,11 +125,6 @@ class PacoteController {
     };
 
     return response.send(serializedData);
-
-    if (!pacote) {
-      return response.status(401).send({ message: "Pacote não encontrado!" });
-    }
-    return response.send(pacote);
   }
 
   async list({ request, response }) {

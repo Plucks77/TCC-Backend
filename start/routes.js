@@ -61,7 +61,7 @@ Route.get("/category/list/", "CategoryController.list").middleware("auth:admin")
 Route.post("/pacote/create", "PacoteController.create").middleware("auth:admin");
 Route.put("/pacote/edit/:id", "PacoteController.edit").middleware("auth:admin");
 Route.delete("/pacote/delete/:id", "PacoteController.delete").middleware("auth:admin");
-Route.get("/pacote/:id", "PacoteController.show")
+Route.get("/pacote/:id", "PacoteController.show").middleware("auth:admin,auth:jwt");
 Route.get("/pacotes", "PacoteController.list").middleware("auth:admin");
 Route.get("/pacote/local/:id", "PacoteController.filtered").middleware("auth:admin,auth:jwt");
 
@@ -69,6 +69,6 @@ Route.get("/pacote/local/:id", "PacoteController.filtered").middleware("auth:adm
 Route.get("/cities", "CityController.list").middleware("auth:admin,auth:jwt");
 
 //Local
-Route.get("/locals", "LocalController.list")
-Route.get("/local/city/:id", "LocalController.filtered")
-Route.get("/local/:id", "LocalController.show")
+Route.get("/locals", "LocalController.list").middleware("auth:admin,auth:jwt");
+Route.get("/local/city/:id", "LocalController.filtered").middleware("auth:admin,auth:jwt");
+Route.get("/local/:id", "LocalController.show").middleware("auth:admin,auth:jwt");
