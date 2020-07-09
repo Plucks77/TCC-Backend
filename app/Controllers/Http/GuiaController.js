@@ -78,7 +78,10 @@ class GuiaController {
   }
 
   async list({ response }) {
-    const guias = await Guia.query().with("evaluations").fetch();
+    const guias = await Guia.query()
+      .with("evaluations")
+      .orderBy("created_at")
+      .fetch();
     const serializedGuias = guias.toJSON();
     const returnedGuias = [];
 

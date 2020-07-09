@@ -128,7 +128,7 @@ class PacoteController {
   }
 
   async list({ request, response }) {
-    const pacotes = await Pacote.all();
+    const pacotes = await Pacote.query().orderBy("created_at").fetch();
 
     if (!pacotes) {
       return response
