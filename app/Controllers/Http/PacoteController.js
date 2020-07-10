@@ -152,6 +152,7 @@ class PacoteController {
           "pacotes.price",
           "c.name as category_name",
           "pacotes.image_url",
+          "pacotes.guia_id",
         ])
         .join("categories as c", "c.id", "pacotes.category_id")
         .fetch();
