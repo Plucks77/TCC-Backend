@@ -1,6 +1,8 @@
 "use strict";
 
 const User = use("App/Models/User");
+const Favorite = use("App/Models/Favorite");
+const Pacote = use("App/Models/Pacote");
 
 class UserController {
   async register({ request, response, auth }) {
@@ -78,6 +80,48 @@ class UserController {
       return response.status(401).send({ message: "Usuário não encontrado!" });
     }
     return response.send(user);
+  }
+
+  async favorite({ request, response }) {
+    const { user_id, pacote_id } = request.body;
+
+    try {
+      const favorite = await Favorite.create({ user_id, pacote_id });
+      return response.send(favorite);
+    } catch (erro) {
+      return response.status(406).send({ erro: erro });
+    }
+  }
+
+  async favorites({ request, response }) {
+    try {
+      const favorites = await Favorite.query()
+        .where("user_id", "=", request.params.id)
+        .with("pacotes", (cb) => {
+          cb.select(
+            "id",
+            "category_id",
+            "guia_id",
+            "local_id",
+            "name",
+            "description",
+            "price",
+            "date",
+            "image_url"
+          );
+        })
+        .fetch();
+
+      const serializedFavorites = favorites.toJSON();
+      let returnedPacotes = [];
+      serializedFavorites.forEach((pacote) => {
+        returnedPacotes.push(pacote.pacotes);
+      });
+
+      return response.send(returnedPacotes);
+    } catch (erro) {
+      return response.status(406).send({ erro: erro });
+    }
   }
 }
 
