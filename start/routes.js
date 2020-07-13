@@ -19,13 +19,14 @@ Route.post("/user/register", "UserController.register");
 Route.post("/user/login", "UserController.login");
 Route.get("/user/list", "UserController.list");
 Route.post("/user/pacote/favorite", "UserController.favorite").middleware("auth");
-Route.get("/user/favorites/:id", "UserController.favorites").middleware("auth");
+Route.get("/user/favorites/:id", "UserController.favorites")//.middleware("auth");
 Route.put("/user/edit/:id", "UserController.edit").middleware("auth");
 Route.delete("/user/delete/:id", "UserController.delete").middleware("auth");
 Route.get("/user/:id", "UserController.user").middleware("auth");
 
 //Favorite
 Route.post("/favorited", "FavoriteController.isFavorited").middleware("auth");
+Route.post("/unfavorite", "FavoriteController.unfavorite")
 
 
 //Forgot Password
