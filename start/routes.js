@@ -24,6 +24,9 @@ Route.put("/user/edit/:id", "UserController.edit").middleware("auth");
 Route.delete("/user/delete/:id", "UserController.delete").middleware("auth");
 Route.get("/user/:id", "UserController.user").middleware("auth");
 
+//Favorite
+Route.get("/favorited", "FavoriteController.isFavorited");
+
 
 //Forgot Password
 Route.post("/forgotpassword", "ForgotPasswordController.create");
