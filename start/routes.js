@@ -71,6 +71,10 @@ Route.get("/pacote/:id", "PacoteController.show").middleware("auth:admin,auth:jw
 Route.get("/pacotes", "PacoteController.list").middleware("auth:admin");
 Route.get("/pacote/local/:id", "PacoteController.filtered").middleware("auth:admin,auth:jwt");
 
+//PacoteFotos
+Route.post("/foto/create", "PacoteFotoController.create").middleware("auth:admin");
+Route.get("/fotos/pacote/:pacote_id", "PacoteFotoController.getFotos").middleware("auth:admin,auth:jwt");
+
 //City
 Route.get("/cities", "CityController.list").middleware("auth:admin,auth:jwt");
 
