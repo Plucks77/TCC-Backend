@@ -9,6 +9,7 @@ class PacoteFotosSchema extends Schema {
       table.increments();
       table.integer("pacote_id").unsigned().references("id").inTable("pacotes");
       table.string("image_url").notNullable();
+      table.string("content_type").notNullable();
       table.timestamps();
     });
   }

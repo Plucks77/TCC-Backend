@@ -19,6 +19,7 @@ const providers = [
   "@adonisjs/vow/providers/VowProvider",
   "@adonisjs/mail/providers/MailProvider",
   "@adonisjs/framework/providers/ViewProvider",
+  "@adonisjs/drive/providers/DriveProvider",
 ];
 
 /*
