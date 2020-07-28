@@ -82,6 +82,10 @@ class PacoteController {
     }
 
     try {
+      const url = pacote.image_url;
+      const fragmentad = url.split("/");
+      const key = fragmentad[3] + "/" + fragmentad[4];
+      await Drive.disk("s3").delete(key);
       await pacote.delete();
 
       return response.send({ message: "Pacote excluído com sucesso!" });

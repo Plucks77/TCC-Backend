@@ -1,17 +1,5 @@
 "use strict";
 
-/*
-|--------------------------------------------------------------------------
-| Routes
-|--------------------------------------------------------------------------
-|
-| Http routes are entry points to your web application. You can create
-| routes for different URLs and bind Controller actions to them.
-|
-| A complete guide on routing is available here.
-| http://adonisjs.com/docs/4.1/routing
-|
-*/
 /** @type {typeof import('@adonisjs/framework/src/Route/Manager')} */
 const Route = use("Route");
 //User
@@ -73,6 +61,7 @@ Route.get("/pacote/local/:id", "PacoteController.filtered").middleware("auth:adm
 
 //PacoteFotos
 Route.post("/foto/create", "PacoteFotoController.create").middleware("auth:admin");
+Route.delete("/foto/delete/:id", "PacoteFotoController.delete").middleware("auth:admin");
 Route.get("/fotos/pacote/:pacote_id", "PacoteFotoController.getFotos").middleware("auth:admin,auth:jwt");
 
 //City

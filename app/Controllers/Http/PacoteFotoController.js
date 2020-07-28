@@ -36,6 +36,21 @@ class PacoteFotoController {
     await request.multipart.process();
   }
 
+  async delete({ request, response }) {
+    const id = request.params.id;
+    try {
+      const pacotefoto = await PacotoFotos.find(id);
+      const url = pacotefoto.image_url;
+      const fragmentad = url.split("/");
+      const key = fragmentad[3] + "/" + fragmentad[4];
+      await Drive.disk("s3").delete(key);
+      await pacotefoto.delete();
+      return response.send({ message: "Foto excluída com sucesso!" });
+    } catch (erro) {
+      return response.status(400).send({ erro });
+    }
+  }
+
   async getFotos({ request, response }) {
     const { pacote_id } = request.params;
 
