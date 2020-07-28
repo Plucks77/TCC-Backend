@@ -127,7 +127,7 @@ module.exports = {
     | is to true. Otherwise everything is processed manually.
     |
     */
-    processManually: ["/foto/create/:pacote_id"],
+    processManually: ["/foto/create", "/pacote/create"],
 
     /*
     |--------------------------------------------------------------------------

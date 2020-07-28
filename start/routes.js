@@ -64,7 +64,7 @@ Route.get("/category/list/", "CategoryController.list").middleware("auth:admin")
 
 
 //Pacote
-Route.post("/pacote/create", "PacoteController.create")//.middleware("auth:admin");
+Route.post("/pacote/create", "PacoteController.create").middleware("auth:admin");
 Route.put("/pacote/edit/:id", "PacoteController.edit").middleware("auth:admin");
 Route.delete("/pacote/delete/:id", "PacoteController.delete").middleware("auth:admin");
 Route.get("/pacote/:id", "PacoteController.show").middleware("auth:admin,auth:jwt");
@@ -72,7 +72,7 @@ Route.get("/pacotes", "PacoteController.list").middleware("auth:admin");
 Route.get("/pacote/local/:id", "PacoteController.filtered").middleware("auth:admin,auth:jwt");
 
 //PacoteFotos
-Route.post("/foto/create/:pacote_id", "PacoteFotoController.create")//.middleware("auth:admin");
+Route.post("/foto/create", "PacoteFotoController.create").middleware("auth:admin");
 Route.get("/fotos/pacote/:pacote_id", "PacoteFotoController.getFotos").middleware("auth:admin,auth:jwt");
 
 //City

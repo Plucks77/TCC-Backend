@@ -1,36 +1,39 @@
 "use strict";
-
 const PacotoFotos = use("App/Models/PacoteFoto");
 const Drive = use("Drive");
-const crypto = require("crypto");
-const { url } = require("@adonisjs/framework/src/Route/Manager");
+const Crypto = require("crypto");
 
 class PacoteFotoController {
   async create({ request, response }) {
-    request.multipart
-      .file("image", {}, async (file) => {
+    try {
+      request.multipart.file("image", {}, async (file) => {
+        const body = {};
+        await request.multipart.field((name, value) => {
+          body[name] = value;
+        });
         const ContentType = file.headers["content-type"];
         const ACL = "public-read";
         const Key =
-          crypto.randomBytes(64).toString("hex") + "-" + file.clientName;
-
-        try {
-          await Drive.put(`Pacotes/${Key}`, file.stream, {
+          Crypto.randomBytes(64).toString("hex") + "-" + file.clientName;
+        const url = await Drive.disk("s3").put(
+          `Pacote_images/${Key}`,
+          file.stream,
+          {
             ContentType,
             ACL,
-          });
-          const url = await Drive.disk("s3").getUrl(`Pacotes/${Key}`);
-          const foto = await PacotoFotos.create({
-            pacote_id: request.params.pacote_id,
-            image_url: url,
-            content_type: ContentType,
-          });
-        } catch (e) {
-          return response.send("Ocorreu algum erro");
-        }
-      })
-      .process();
-    return response.send({ message: "Sucesso!" });
+          }
+        );
+        const pacotefoto = await PacotoFotos.create({
+          pacote_id: body.pacote_id,
+          image_url: url,
+          content_type: ContentType,
+        });
+        return response.send({ pacotefoto });
+      });
+    } catch (erro) {
+      return response.status(400).send({ erro });
+    }
+    await request.multipart.process();
   }
 
   async getFotos({ request, response }) {

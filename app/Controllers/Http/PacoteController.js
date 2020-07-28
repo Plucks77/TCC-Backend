@@ -1,36 +1,41 @@
 "use strict";
 const Pacote = use("App/Models/Pacote");
-const Local = use("App/Models/Local");
+const Drive = use("Drive");
+const crypto = require("crypto");
 
 class PacoteController {
   async create({ request, response }) {
-    const {
-      category_id,
-      guia_id,
-      local_id,
-      name,
-      description,
-      price,
-      date,
-      image_url,
-    } = request.body;
-
     try {
-      const pacote = await Pacote.create({
-        category_id,
-        guia_id,
-        local_id,
-        name,
-        description,
-        price,
-        date,
-        image_url,
+      request.multipart.file("image", {}, async (file) => {
+        const body = {};
+        await request.multipart.field((name, value) => {
+          body[name] = value;
+        });
+        const ContentType = file.headers["content-type"];
+        const ACL = "public-read";
+        const Key =
+          crypto.randomBytes(64).toString("hex") + "-" + file.clientName;
+        const url = await Drive.disk("s3").put(`Pacotes/${Key}`, file.stream, {
+          ContentType,
+          ACL,
+        });
+        const pacote = await Pacote.create({
+          category_id: body.category_id,
+          guia_id: body.guia_id,
+          local_id: body.local_id,
+          name: body.name,
+          description: body.description,
+          price: body.price,
+          date: body.date,
+          image_url: url,
+        });
+        return response.send({ pacote });
       });
-
-      return response.send({ pacote });
-    } catch (e) {
-      return response.status(406).send(e.message);
+    } catch (erro) {
+      return response.status(400).send({ erro });
     }
+
+    await request.multipart.process();
   }
 
   async edit({ request, response }) {
