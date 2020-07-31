@@ -56,7 +56,7 @@ class PacoteFotoController {
 
     const fotos = await PacotoFotos.query()
       .where("pacote_id", "=", pacote_id)
-      .select("image_url")
+      .select("id", "image_url")
       .fetch();
 
     return response.send(fotos);
