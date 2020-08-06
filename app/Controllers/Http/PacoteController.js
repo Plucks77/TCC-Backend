@@ -1,7 +1,10 @@
 "use strict";
 const Pacote = use("App/Models/Pacote");
+const PacotoFotos = use("App/Models/PacoteFoto");
 const Drive = use("Drive");
 const crypto = require("crypto");
+const Help = use("App/Common");
+const Helper = new Help();
 
 class PacoteController {
   async create({ request, response }) {
@@ -82,6 +85,15 @@ class PacoteController {
     }
 
     try {
+      const pacote_id = pacote.id;
+      const pacotefotos = await PacotoFotos.query()
+        .where("pacote_id", "=", pacote_id)
+        .fetch();
+      const pacotesJson = pacotefotos.toJSON();
+      pacotesJson.map(async (pacoteFoto) => {
+        await Helper.delete(pacoteFoto.id);
+      });
+
       const url = pacote.image_url;
       const fragmentad = url.split("/");
       const key = fragmentad[3] + "/" + fragmentad[4];
