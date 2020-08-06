@@ -64,6 +64,10 @@ Route.post("/foto/create", "PacoteFotoController.create").middleware("auth:admin
 Route.delete("/foto/delete/:id", "PacoteFotoController.delete").middleware("auth:admin");
 Route.get("/fotos/pacote/:pacote_id", "PacoteFotoController.getFotos").middleware("auth:admin,auth:jwt");
 
+//Foto
+Route.post("/envia/foto/:local", "FotoController.create").middleware("auth:admin");
+Route.delete("/delete/foto", "FotoController.delete").middleware("auth:admin");
+
 //City
 Route.get("/cities", "CityController.list").middleware("auth:admin,auth:jwt");
 
