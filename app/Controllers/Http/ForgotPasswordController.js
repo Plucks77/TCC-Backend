@@ -22,7 +22,7 @@ class ForgotPasswordController {
         .to(user.email)
         .subject("Troca de senha da sua conta ValeTour");
     });
-    response.send(forgot);
+    return response.send(forgot);
   }
 
   async validate({ request, response }) {
@@ -35,7 +35,7 @@ class ForgotPasswordController {
     if (!ttoken.token) {
       return response.status(401).send({ message: "Token inválido!" });
     }
-    response.send({ message: "Ok" });
+    return response.send({ message: "Ok" });
   }
 
   async change({ request, response }) {
