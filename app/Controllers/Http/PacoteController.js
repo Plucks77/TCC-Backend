@@ -174,6 +174,7 @@ class PacoteController {
           "c.name as category_name",
           "pacotes.image_url",
           "pacotes.guia_id",
+          "pacotes.date",
         ])
         .join("categories as c", "c.id", "pacotes.category_id")
         .fetch();
