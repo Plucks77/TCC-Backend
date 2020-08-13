@@ -25,6 +25,22 @@ class PurchaseController {
       return response.status(400).send({ erro });
     }
   }
+
+  async haspurchases({ request, response }) {
+    const { user_id } = request.params;
+    try {
+      const hasPurchase = await Purchase.query()
+        .where("user_id", "=", user_id)
+        .getCount();
+      if (hasPurchase) {
+        return response.send(true);
+      } else {
+        return response.send(false);
+      }
+    } catch (erro) {
+      return response.status(400).send({ erro });
+    }
+  }
 }
 
 module.exports = PurchaseController;

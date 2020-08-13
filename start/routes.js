@@ -79,3 +79,4 @@ Route.get("/local/:id", "LocalController.show").middleware("auth:admin,auth:jwt"
 //Purchase
 Route.post("/purchase", "PurchaseController.create").middleware("auth");
 Route.get("/purchases/user/:user_id", "PurchaseController.filtered").middleware("auth");
+Route.get("/purchases/haspurchases/:user_id", "PurchaseController.haspurchases").middleware("auth");
