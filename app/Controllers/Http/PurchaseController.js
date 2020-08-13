@@ -32,7 +32,8 @@ class PurchaseController {
       const hasPurchase = await Purchase.query()
         .where("user_id", "=", user_id)
         .getCount();
-      if (hasPurchase) {
+
+      if (hasPurchase !== 0) {
         return response.send(true);
       } else {
         return response.send(false);
