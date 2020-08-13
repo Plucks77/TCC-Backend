@@ -75,3 +75,7 @@ Route.get("/cities", "CityController.list").middleware("auth:admin,auth:jwt");
 Route.get("/locals", "LocalController.list").middleware("auth:admin,auth:jwt");
 Route.get("/local/city/:id", "LocalController.filtered").middleware("auth:admin,auth:jwt");
 Route.get("/local/:id", "LocalController.show").middleware("auth:admin,auth:jwt");
+
+//Purchase
+Route.post("/purchase", "PurchaseController.create")//.middleware("auth");
+Route.get("/purchases/user/:user_id", "PurchaseController.filtered")//.middleware("auth");
