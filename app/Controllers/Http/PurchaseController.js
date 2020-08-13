@@ -31,9 +31,9 @@ class PurchaseController {
     try {
       const hasPurchase = await Purchase.query()
         .where("user_id", "=", user_id)
-        .getCount();
+        .fetch();
 
-      if (hasPurchase !== 0) {
+      if (hasPurchase.rows.length !== 0) {
         return response.send(true);
       } else {
         return response.send(false);
