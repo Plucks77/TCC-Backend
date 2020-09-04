@@ -19,10 +19,12 @@ class PurchaseController {
     try {
       const purchases = await Purchase.query()
         .where("user_id", "=", user_id)
+        .select("p.id", "p.name", "p.description", "p.image_url")
+        .join("pacotes as p", "p.id", "pacote_id")
         .fetch();
       return response.send(purchases);
     } catch (erro) {
-      return response.status(400).send({ erro });
+      return response.status(400).send({ erro: erro });
     }
   }
 
