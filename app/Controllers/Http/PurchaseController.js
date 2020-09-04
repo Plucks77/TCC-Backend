@@ -19,7 +19,7 @@ class PurchaseController {
     try {
       const purchases = await Purchase.query()
         .where("user_id", "=", user_id)
-        .select("p.id", "p.name", "p.description", "p.image_url")
+        .select("p.id", "p.name", "p.description", "p.date", "p.image_url")
         .join("pacotes as p", "p.id", "pacote_id")
         .fetch();
       return response.send(purchases);
