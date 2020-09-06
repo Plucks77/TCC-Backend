@@ -21,6 +21,7 @@ class PurchaseController {
         .where("user_id", "=", user_id)
         .select("p.id", "p.name", "p.description", "p.date", "p.image_url")
         .join("pacotes as p", "p.id", "pacote_id")
+        .orderBy("p.date")
         .fetch();
       return response.send(purchases);
     } catch (erro) {
