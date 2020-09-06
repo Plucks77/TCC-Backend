@@ -77,8 +77,8 @@ Route.get("/local/city/:id", "LocalController.filtered").middleware("auth:admin,
 Route.get("/local/:id", "LocalController.show").middleware("auth:admin,auth:jwt");
 
 //Purchase
-Route.post("/purchase", "PurchaseController.create")//.middleware("auth");
+Route.post("/purchase", "PurchaseController.create").middleware("auth");
 Route.get("/purchases/user/:user_id", "PurchaseController.filtered").middleware("auth");
-Route.get("/purchases/haspurchases/:user_id", "PurchaseController.haspurchases")//.middleware("auth");
-Route.get("/purchase/confirm/:user_id/:pacote_id", "PurchaseController.confirmUser")//.middleware("auth");
-Route.get("/purchase/list/:pacote_id", "PurchaseController.listUsers")//.middleware("auth");
+Route.get("/purchases/haspurchases/:user_id", "PurchaseController.haspurchases").middleware("auth");
+Route.get("/purchase/confirm/:user_id/:pacote_id", "PurchaseController.confirmUser").middleware("auth");
+Route.get("/purchase/list/:pacote_id", "PurchaseController.listUsers").middleware("auth");
