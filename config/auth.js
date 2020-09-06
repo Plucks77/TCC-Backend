@@ -85,6 +85,16 @@ module.exports = {
       secret: Env.get("APP_KEY"),
     },
   },
+  guia: {
+    serializer: "lucid",
+    model: "App/Models/Guia",
+    scheme: "jwt",
+    uid: "email",
+    password: "password",
+    options: {
+      secret: Env.get("APP_KEY"),
+    },
+  },
 
   /*
   |--------------------------------------------------------------------------

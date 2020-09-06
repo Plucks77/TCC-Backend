@@ -5,10 +5,16 @@ const Eva = use("App/Models/Evaluation");
 
 class GuiaController {
   async register({ request, response }) {
-    const { name, description, tel } = request.body;
+    const { name, description, tel, email, password } = request.body;
 
     try {
-      const guia = await Guia.create({ name, description, tel });
+      const guia = await Guia.create({
+        name,
+        description,
+        tel,
+        email,
+        password,
+      });
 
       return response.send({ guia });
     } catch (e) {
@@ -23,11 +29,13 @@ class GuiaController {
       return response.status(404).send({ message: "Guia não encontrado!" });
     }
 
-    const { name, description, tel } = request.body;
+    const { name, description, tel, email, password } = request.body;
 
     guia.name = name;
     guia.description = description;
     guia.tel = tel;
+    guia.tel = email;
+    guia.tel = password;
 
     try {
       await guia.save();
