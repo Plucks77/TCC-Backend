@@ -9,6 +9,7 @@ class PurchasesSchema extends Schema {
       table.increments();
       table.integer("user_id").unsigned().references("id").inTable("users");
       table.integer("pacote_id").unsigned().references("id").inTable("pacotes");
+      table.boolean("confirmed").defaultTo(false);
       table.timestamps();
     });
   }

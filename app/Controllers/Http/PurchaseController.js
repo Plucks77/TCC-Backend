@@ -44,6 +44,35 @@ class PurchaseController {
       return response.status(400).send({ erro });
     }
   }
+
+  async confirmUser({ request, response }) {
+    const { user_id, pacote_id } = request.params;
+
+    try {
+      await Purchase.query()
+        .where("user_id", "=", user_id)
+        .where("pacote_id", "=", pacote_id)
+        .update({ confirmed: true });
+      return response.send(true);
+    } catch (erro) {
+      return response.status(400).send({ erro: erro.message });
+    }
+  }
+
+  async listUsers({ request, response }) {
+    const { pacote_id } = request.params;
+
+    try {
+      const purchase = await Purchase.query()
+        .where("pacote_id", "=", pacote_id)
+        .select("u.username", "confirmed")
+        .join("users as u", "u.id", "user_id")
+        .fetch();
+      return response.send(purchase);
+    } catch (erro) {
+      return response.status(400).send({ erro: erro.message });
+    }
+  }
 }
 
 module.exports = PurchaseController;
