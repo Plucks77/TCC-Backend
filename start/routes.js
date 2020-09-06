@@ -30,12 +30,13 @@ Route.post("/admin/login", "AdminController.login");
 
 //Guia
 Route.post("/guia/register", "GuiaController.register").middleware("auth:admin");
+Route.post("/guia/login", "GuiaController.login");
 Route.put("/guia/edit/:id", "GuiaController.edit").middleware("auth:admin");
 Route.delete("/guia/delete/:id", "GuiaController.delete").middleware("auth:admin");
 Route.get("/guia/list", "GuiaController.list").middleware("auth:admin");
 Route.get("/guia/:id", "GuiaController.show").middleware("auth:admin,auth:jwt");
-Route.get("/guia/evaluations/:id", "GuiaController.evaluations").middleware("auth:admin");;
-Route.get("/guia/rating/:id", "GuiaController.rating").middleware("auth:admin");;
+Route.get("/guia/evaluations/:id", "GuiaController.evaluations").middleware("auth:admin");
+Route.get("/guia/rating/:id", "GuiaController.rating").middleware("auth:admin");
 
 
 //Evaluation

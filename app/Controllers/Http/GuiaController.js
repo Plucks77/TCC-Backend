@@ -22,6 +22,20 @@ class GuiaController {
     }
   }
 
+  async login({ request, response, auth }) {
+    const { email, password } = request.all();
+
+    try {
+      const token = await auth.authenticator("guia").attempt(email, password);
+
+      const admin = await Admin.findByOrFail("email", email);
+
+      return response.send({ admin_id: admin.id, token: token.token });
+    } catch (erro) {
+      return response.status(400).send({ erro: erro.message });
+    }
+  }
+
   async edit({ request, response }) {
     const guia = await Guia.find(request.params.id);
 
