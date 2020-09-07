@@ -59,6 +59,7 @@ Route.delete("/pacote/delete/:id", "PacoteController.delete").middleware("auth:a
 Route.get("/pacote/:id", "PacoteController.show").middleware("auth:admin,auth:jwt");
 Route.get("/pacotes", "PacoteController.list").middleware("auth:admin");
 Route.get("/pacote/local/:id", "PacoteController.filtered").middleware("auth:admin,auth:jwt");
+Route.get("/pacotes/guia/:guia_id", "PacoteController.guia")//.middleware("auth:admin,auth:guia");
 
 //PacoteFotos
 Route.post("/foto/create", "PacoteFotoController.create").middleware("auth:admin");

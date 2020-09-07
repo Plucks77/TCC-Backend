@@ -181,7 +181,29 @@ class PacoteController {
 
       return response.send(pacotes);
     } catch (e) {
-      return response.status(400).send({ erro: e });
+      return response.status(400).send({ erro: e.message });
+    }
+  }
+
+  async guia({ request, response }) {
+    const { guia_id } = request.params;
+
+    try {
+      const pacotes = await Pacote.query()
+        .where("guia_id", "=", guia_id)
+        .select(
+          "pacotes.id",
+          "pacotes.name",
+          "pacotes.date",
+          "pacotes.image_url"
+        )
+        .with("p", (builder) => builder.withCount("user_id"))
+        .join("purchases as p", "p.pacote_id", "pacotes.id")
+        .fetch();
+
+      return response.send(pacotes);
+    } catch (e) {
+      return response.status(400).send({ erro: e.message });
     }
   }
 }
