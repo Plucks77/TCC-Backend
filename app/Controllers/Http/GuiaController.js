@@ -48,8 +48,8 @@ class GuiaController {
     guia.name = name;
     guia.description = description;
     guia.tel = tel;
-    guia.tel = email;
-    guia.tel = password;
+    guia.email = email;
+    guia.password = password;
 
     try {
       await guia.save();
