@@ -197,8 +197,8 @@ class PacoteController {
           "pacotes.date",
           "pacotes.image_url"
         )
-        .with("p", (builder) => builder.withCount("user_id"))
-        .join("purchases as p", "p.pacote_id", "pacotes.id")
+        .withCount("purchases as participantes")
+        .orderBy("pacotes.date")
         .fetch();
 
       return response.send(pacotes);
