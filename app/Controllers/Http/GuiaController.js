@@ -28,9 +28,9 @@ class GuiaController {
     try {
       const token = await auth.authenticator("guia").attempt(email, password);
 
-      const admin = await Admin.findByOrFail("email", email);
+      const guia = await Guia.findByOrFail("email", email);
 
-      return response.send({ admin_id: admin.id, token: token.token });
+      return response.send({ guia_id: guia.id, token: token.token });
     } catch (erro) {
       return response.status(400).send({ erro: erro.message });
     }
