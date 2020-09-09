@@ -1,9 +1,24 @@
 "use strict";
-const { test, trait } = use("Test/Suite")("User");
+const Suite = use("Test/Suite")("User");
+const { before, beforeEach, after, afterEach, trait, test } = Suite;
 const User = use("App/Models/User");
+const Pacote = use("App/Models/Pacote");
 
 trait("Test/ApiClient");
 trait("Auth/Client");
+
+before(async () => {
+  await Pacote.create({
+    category_id: 1,
+    guia_id: 1,
+    local_id: 1,
+    name: "Pacote de teste",
+    description: "Descrição do pacote de teste",
+    price: 1000,
+    date: "25/12/2020",
+    image_url: "www.google.com",
+  });
+});
 
 test("Should create a user", async ({ client }) => {
   const response = await client
@@ -126,10 +141,36 @@ test("Should not delete the user because the user is not authenticated", async (
   response.assertStatus(401);
 });
 
+test("Should show the user", async ({ client, assert }) => {
+  const user = await User.find(1);
+
+  const response = await client.get("/user/1").loginVia(user).end();
+
+  response.assertStatus(200);
+});
+
+test("Should not show the user because the user is not authenticated", async ({
+  client,
+  assert,
+}) => {
+  const response = await client.get("/user/1").end();
+
+  response.assertStatus(401);
+});
+
 test("Should delete the user", async ({ client, assert }) => {
   const user = await User.find(1);
 
   const response = await client.delete("/user/delete/1").loginVia(user).end();
 
   response.assertStatus(200);
+});
+
+test("Should not show the user because the user does not exist", async ({
+  client,
+  assert,
+}) => {
+  const response = await client.get("/user/2").end();
+
+  response.assertStatus(401);
 });

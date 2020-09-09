@@ -86,6 +86,16 @@ class UserController {
     const { user_id, pacote_id } = request.body;
 
     try {
+      const user = await User.find(user_id);
+      if (!user) {
+        return response
+          .status(404)
+          .send({ message: "Usuário não encontrado!" });
+      }
+      const pacote = await Pacote.find(pacote_id);
+      if (!pacote) {
+        return response.status(404).send({ message: "Pacote não encontrado!" });
+      }
       const favorite = await Favorite.create({ user_id, pacote_id });
       return response.send(favorite);
     } catch (erro) {
@@ -95,6 +105,13 @@ class UserController {
 
   async favorites({ request, response }) {
     try {
+      const user = await User.find(request.params.id);
+      if (!user) {
+        return response
+          .status(404)
+          .send({ message: "Usuário não encontrado!" });
+      }
+
       const favorites = await Favorite.query()
         .where("user_id", "=", request.params.id)
         .with("pacotes", (cb) => {
