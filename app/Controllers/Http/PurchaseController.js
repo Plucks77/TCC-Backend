@@ -47,7 +47,7 @@ class PurchaseController {
   }
 
   async confirmUser({ request, response }) {
-    const { user_id, pacote_id } = request.params;
+    const { user_id, pacote_id } = request.body;
 
     try {
       await Purchase.query()
