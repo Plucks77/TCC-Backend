@@ -37,6 +37,8 @@ Route.get("/guia/list", "GuiaController.list").middleware("auth:admin");
 Route.get("/guia/:id", "GuiaController.show").middleware("auth:admin,auth:jwt");
 Route.get("/guia/evaluations/:id", "GuiaController.evaluations").middleware("auth:admin");
 Route.get("/guia/rating/:id", "GuiaController.rating").middleware("auth:admin");
+Route.get("/guia/verify/:id", "GuiaController.verify").middleware("auth:guia");
+Route.post("/guia/verify-token", "GuiaController.verifytoken").middleware("auth:guia");
 
 
 //Evaluation

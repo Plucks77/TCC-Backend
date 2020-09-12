@@ -153,6 +153,45 @@ class GuiaController {
       media,
     });
   }
+
+  async verify({ request, response }) {
+    const { id } = request.params;
+
+    try {
+      const guia = await Guia.find(id);
+
+      if (!guia) {
+        return response.status(404).send({ message: "Guia não encontrado!" });
+      }
+
+      if (guia.expoToken === null) {
+        return response.send({ verified: false });
+      }
+      return response.send({ verified: true });
+    } catch (e) {
+      return response.status(400).send({ erro: e.message });
+    }
+  }
+
+  async verifytoken({ request, response }) {
+    const { id, token } = request.body;
+
+    try {
+      const guia = await Guia.find(id);
+      if (!guia) {
+        return response
+          .status(404)
+          .send({ message: "Guia não foi encontrado!" });
+      }
+      guia.expoToken = token;
+      await guia.save();
+      return response.send({
+        message: `Token inserido para o guia ${guia.name}!`,
+      });
+    } catch (e) {
+      return response.status(400).send({ erro: e.message });
+    }
+  }
 }
 
 module.exports = GuiaController;
