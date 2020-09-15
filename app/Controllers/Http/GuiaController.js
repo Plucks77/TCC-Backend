@@ -200,6 +200,7 @@ class GuiaController {
     try {
       const guia = await Guia.find(guia_id);
       const user = await User.find(user_id);
+
       if (!guia) {
         return response.status(404).send({ message: "Guia não encontrado." });
       }
