@@ -195,7 +195,7 @@ class GuiaController {
   }
 
   async sendNotification({ request, response }) {
-    const { guia_id, user_id } = request.body;
+    const { guia_id, user_id, coords } = request.body;
 
     try {
       const guia = await Guia.find(guia_id);
@@ -210,14 +210,14 @@ class GuiaController {
       }
 
       await Axios.post("https://exp.host/--/api/v2/push/send", {
-        to: "ExponentPushToken[3WuUnUG6F1_uOeLa4IKb5q]",
+        to: guia.expoToken,
         title: `Atenção Guia!`,
         body: `O membro ${user.username} se perdeu!\nAbra esta notificação para ver sua localização no mapa!`,
         priority: "high",
         sound: "default",
         data: {
-          x: "-22.9035",
-          y: "-43.2096",
+          x: coords.x,
+          y: coords.y,
         },
       });
       return response.send({ message: "ok" });
