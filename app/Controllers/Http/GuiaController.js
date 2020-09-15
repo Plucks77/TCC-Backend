@@ -195,7 +195,7 @@ class GuiaController {
   }
 
   async sendNotification({ request, response }) {
-    const { guia_id, user_id, coords } = request.body;
+    const { guia_id, user_id, x, y } = request.body;
 
     try {
       const guia = await Guia.find(guia_id);
@@ -216,8 +216,8 @@ class GuiaController {
         priority: "high",
         sound: "default",
         data: {
-          x: coords.x,
-          y: coords.y,
+          x,
+          y,
         },
       });
       return response.send({ message: "ok" });
