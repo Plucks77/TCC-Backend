@@ -220,6 +220,7 @@ class GuiaController {
           y: "-43.2096",
         },
       });
+      return response.send({ message: "ok" });
     } catch (e) {
       return response.status(400).send({ erro: e.message });
     }
