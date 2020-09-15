@@ -19,7 +19,14 @@ class PurchaseController {
     try {
       const purchases = await Purchase.query()
         .where("user_id", "=", user_id)
-        .select("p.id", "p.name", "p.description", "p.date", "p.image_url")
+        .select(
+          "p.id",
+          "p.name",
+          "p.description",
+          "p.date",
+          "p.image_url",
+          "p.guia_id"
+        )
         .join("pacotes as p", "p.id", "pacote_id")
         .orderBy("p.date")
         .fetch();
