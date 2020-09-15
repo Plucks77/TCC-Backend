@@ -1,7 +1,8 @@
 "use strict";
-
 const Guia = use("App/Models/Guia");
+const User = use("App/Models/User");
 const Eva = use("App/Models/Evaluation");
+const Axios = require("axios").default;
 
 class GuiaController {
   async register({ request, response }) {
@@ -187,6 +188,37 @@ class GuiaController {
       await guia.save();
       return response.send({
         message: `Token inserido para o guia ${guia.name}!`,
+      });
+    } catch (e) {
+      return response.status(400).send({ erro: e.message });
+    }
+  }
+
+  async sendNotification({ request, response }) {
+    const { guia_id, user_id } = request.body;
+
+    try {
+      const guia = await Guia.find(guia_id);
+      const user = await User.find(user_id);
+      if (!guia) {
+        return response.status(404).send({ message: "Guia não encontrado." });
+      }
+      if (!user) {
+        return response
+          .status(404)
+          .send({ message: "Usuário não encontrado." });
+      }
+
+      await Axios.post("https://exp.host/--/api/v2/push/send", {
+        to: "ExponentPushToken[3WuUnUG6F1_uOeLa4IKb5q]",
+        title: `Atenção Guia!`,
+        body: `O membro ${user.username} se perdeu!\nAbra esta notificação para ver sua localização no mapa!`,
+        priority: "high",
+        sound: "default",
+        data: {
+          x: "-22.9035",
+          y: "-43.2096",
+        },
       });
     } catch (e) {
       return response.status(400).send({ erro: e.message });
