@@ -13,7 +13,7 @@
     "adonisjs",
     "adonis-app"
   ],
-  "author": "",
+  "author": "Pedro Lucas de Paulo Leoti",
   "license": "UNLICENSED",
   "private": true,
   "dependencies": {
