@@ -194,8 +194,12 @@ class PacoteController {
         .select(
           "pacotes.id",
           "pacotes.name",
+          "pacotes.description",
+          "pacotes.price",
           "pacotes.date",
-          "pacotes.image_url"
+          "pacotes.image_url",
+          "pacotes.category_id",
+          "pacotes.local_id"
         )
         .withCount("purchases as participantes")
         .orderBy("pacotes.date")
