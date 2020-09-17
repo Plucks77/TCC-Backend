@@ -12,7 +12,7 @@ before(async () => {
     name: "Guia para testes",
     description: "Um guia para testes",
     tel: "24992859059",
-    email: "guia1@gmail.com",
+    email: "guia2@gmail.com",
     password: "123456789",
   });
 });
@@ -21,7 +21,7 @@ test("Should login the guide", async ({ client, assert }) => {
   const response = await client
     .post("/guia/login")
     .send({
-      email: "guia1@gmail.com",
+      email: "guia2@gmail.com",
       password: "123456789",
     })
     .end();
@@ -49,7 +49,7 @@ test("Should not login the guide because the password is wrong", async ({
   const response = await client
     .post("/guia/login")
     .send({
-      email: "guia1@gmail.com",
+      email: "guia2@gmail.com",
       password: "11111111",
     })
     .end();
@@ -60,8 +60,8 @@ test("Should verify if the guide has the notification token", async ({
   client,
   assert,
 }) => {
-  const guia = await Guia.find(1);
-  const response = await client.get("guia/verify/1").loginVia(guia).end();
+  const guia = await Guia.find(2);
+  const response = await client.get("guia/verify/2").loginVia(guia).end();
   response.assertStatus(200);
 });
 
@@ -69,6 +69,6 @@ test("Should not verify if the guide has the notification token bencause the gui
   client,
   assert,
 }) => {
-  const response = await client.get("guia/verify/1").end();
+  const response = await client.get("guia/verify/2").end();
   response.assertStatus(401);
 });
