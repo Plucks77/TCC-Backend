@@ -1,5 +1,5 @@
 "use strict";
-const Suite = use("Test/Suite")("User");
+const Suite = use("Test/Suite")("User - Auth");
 const { before, beforeEach, after, afterEach, trait, test } = Suite;
 const User = use("App/Models/User");
 const Pacote = use("App/Models/Pacote");
@@ -58,10 +58,27 @@ test("Should login", async ({ client, assert }) => {
     .end();
 
   response.assertStatus(200);
-  assert.exists(response.body.user_id, response.body.token);
 });
 
-test("Should not login", async ({ client, assert }) => {
+test("Should not login because the email is wrong", async ({
+  client,
+  assert,
+}) => {
+  const response = await client
+    .post("/user/login")
+    .send({
+      email: "pedro_leoti@hotmail.com.br",
+      password: "123456789",
+    })
+    .end();
+
+  response.assertStatus(401);
+});
+
+test("Should not login because the password is wrong", async ({
+  client,
+  assert,
+}) => {
   const response = await client
     .post("/user/login")
     .send({
@@ -71,7 +88,6 @@ test("Should not login", async ({ client, assert }) => {
     .end();
 
   response.assertStatus(401);
-  assert.notExists(response.body.user_id, response.body.token);
 });
 
 test("Should update the user", async ({ client, assert }) => {

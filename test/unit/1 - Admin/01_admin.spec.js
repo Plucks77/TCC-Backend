@@ -1,5 +1,5 @@
 "use strict";
-const Suite = use("Test/Suite")("Admin");
+const Suite = use("Test/Suite")("Admin - Auth");
 const { before, beforeEach, after, afterEach, trait, test } = Suite;
 const Admin = use("App/Models/Admin");
 

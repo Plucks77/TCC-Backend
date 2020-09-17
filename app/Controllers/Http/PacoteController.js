@@ -5,47 +5,86 @@ const Drive = use("Drive");
 const crypto = require("crypto");
 const Help = use("App/Common");
 const Helper = new Help();
+const Category = use("App/Models/Category");
+const Guia = use("App/Models/Guia");
+const Local = use("App/Models/Local");
 
 class PacoteController {
   async create({ request, response }) {
-    try {
-      request.multipart.file("image", {}, async (file) => {
-        const body = {};
-        await request.multipart.field((name, value) => {
-          body[name] = value;
-        });
-        const ContentType = file.headers["content-type"];
-        const ACL = "public-read";
-        const Key =
-          crypto.randomBytes(64).toString("hex") + "-" + file.clientName;
-        const url = await Drive.disk("s3").put(`Pacotes/${Key}`, file.stream, {
-          ContentType,
-          ACL,
-        });
-        const pacote = await Pacote.create({
-          category_id: body.category_id,
-          guia_id: body.guia_id,
-          local_id: body.local_id,
-          name: body.name,
-          description: body.description,
-          price: body.price,
-          date: body.date,
-          image_url: url,
-        });
-        return response.send({ pacote });
+    if (process.env.NODE_ENV === "testing") {
+      const category = await Category.find(request.body.category_id);
+      if (!category) {
+        return response
+          .status(404)
+          .send({ message: "Categoria não encontrada" });
+      }
+      const guia = await Guia.find(request.body.guia_id);
+      if (!guia) {
+        return response
+          .status(404)
+          .send({ message: "Categoria não encontrada" });
+      }
+      const local = await Local.find(request.body.local_id);
+      if (!local) {
+        return response
+          .status(404)
+          .send({ message: "Categoria não encontrada" });
+      }
+      const pacote = await Pacote.create({
+        category_id: request.body.category_id,
+        guia_id: request.body.guia_id,
+        local_id: request.body.local_id,
+        name: request.body.name,
+        description: request.body.description,
+        price: request.body.price,
+        date: request.body.date,
+        image_url: request.body.image_url,
       });
-    } catch (erro) {
-      return response.status(400).send({ erro });
-    }
+      return response.send({ pacote });
+    } else {
+      try {
+        request.multipart.file("image", {}, async (file) => {
+          const body = {};
+          await request.multipart.field((name, value) => {
+            body[name] = value;
+          });
+          const ContentType = file.headers["content-type"];
+          const ACL = "public-read";
+          const Key =
+            crypto.randomBytes(64).toString("hex") + "-" + file.clientName;
+          const url = await Drive.disk("s3").put(
+            `Pacotes/${Key}`,
+            file.stream,
+            {
+              ContentType,
+              ACL,
+            }
+          );
+          const pacote = await Pacote.create({
+            category_id: body.category_id,
+            guia_id: body.guia_id,
+            local_id: body.local_id,
+            name: body.name,
+            description: body.description,
+            price: body.price,
+            date: body.date,
+            image_url: url,
+          });
+          return response.send({ pacote });
+        });
+      } catch (erro) {
+        return response.status(400).send({ erro });
+      }
 
-    await request.multipart.process();
+      await request.multipart.process();
+    }
   }
 
   async edit({ request, response }) {
     const pacote = await Pacote.find(request.params.id);
 
     if (!pacote) {
-      return response.status(401).send({ message: "Pacote não encontrado!" });
+      return response.status(404).send({ message: "Pacote não encontrado!" });
     }
 
     const {
@@ -107,45 +146,50 @@ class PacoteController {
   }
 
   async show({ request, response }) {
-    const pacote = await Pacote.query()
-      .where("id", "=", request.params.id)
-      .with("local", (builder) => {
-        builder.select("id", "city_id");
-      })
-      .fetch();
-
-    if (!pacote) {
-      return response.status(401).send({ message: "Pacote não encontrado!" });
+    const verify = await Pacote.find(request.params.id);
+    if (!verify) {
+      return response.status(404).send({ message: "Pacote não encontrado!" });
     }
+    try {
+      const pacote = await Pacote.query()
+        .where("id", "=", request.params.id)
+        .with("local", (builder) => {
+          builder.select("id", "city_id");
+        })
+        .fetch();
 
-    const json = pacote.toJSON();
-    const city_id = json[0].local.city_id;
-    const {
-      id,
-      category_id,
-      guia_id,
-      local_id,
-      name,
-      description,
-      price,
-      date,
-      image_url,
-    } = json[0];
+      const json = pacote.toJSON();
+      const city_id = json[0].local.city_id;
+      const {
+        id,
+        category_id,
+        guia_id,
+        local_id,
+        name,
+        description,
+        price,
+        date,
+        image_url,
+      } = json[0];
 
-    const serializedData = {
-      id,
-      category_id,
-      guia_id,
-      city_id,
-      local_id,
-      name,
-      description,
-      price,
-      date,
-      image_url,
-    };
+      const serializedData = {
+        id,
+        category_id,
+        guia_id,
+        city_id,
+        local_id,
+        name,
+        description,
+        price,
+        date,
+        image_url,
+      };
 
-    return response.send(serializedData);
+      return response.send(serializedData);
+    } catch (e) {
+      console.log(e.message);
+      return response.status(400).send({ erro: e.message });
+    }
   }
 
   async list({ request, response }) {

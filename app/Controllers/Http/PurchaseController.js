@@ -1,9 +1,21 @@
 "use strict";
 const Purchase = use("App/Models/Purchase");
+const User = use("App/Models/User");
+const Pacote = use("App/Models/Pacote");
 
 class PurchaseController {
   async create({ request, response }) {
     const { user_id, pacote_id } = request.body;
+
+    const user = await User.find(user_id);
+    if (!user) {
+      return response.status(404).send({ message: "Usuário não encontrado" });
+    }
+
+    const pacote = await Pacote.find(pacote_id);
+    if (!pacote) {
+      return response.status(404).send({ message: "Pacote não encontrado" });
+    }
 
     try {
       const purchase = await Purchase.create({ user_id, pacote_id });
@@ -15,6 +27,11 @@ class PurchaseController {
 
   async filtered({ request, response }) {
     const { user_id } = request.params;
+
+    const user = await User.find(user_id);
+    if (!user) {
+      return response.status(404).send({ message: "Usuário não encontrado" });
+    }
 
     try {
       const purchases = await Purchase.query()
