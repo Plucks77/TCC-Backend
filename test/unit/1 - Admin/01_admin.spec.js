@@ -32,7 +32,7 @@ test("Should not create an admin account, because the email already exsists", as
   response.assertStatus(406);
 });
 
-test("Should logint the admin", async ({ client }) => {
+test("Should login the admin", async ({ client }) => {
   const response = await client
     .post("/admin/login")
     .send({

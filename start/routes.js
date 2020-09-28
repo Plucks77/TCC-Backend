@@ -56,7 +56,7 @@ Route.get("/category/list/", "CategoryController.list").middleware("auth:admin")
 
 
 //Pacote
-Route.post("/pacote/create", "PacoteController.create").middleware("auth:admin");
+Route.post("/pacote/create", "PacoteController.create").middleware("auth:admin,auth:guia");
 Route.put("/pacote/edit/:id", "PacoteController.edit").middleware("auth:admin");
 Route.delete("/pacote/delete/:id", "PacoteController.delete").middleware("auth:admin");
 Route.get("/pacote/:id", "PacoteController.show").middleware("auth:admin,auth:jwt");

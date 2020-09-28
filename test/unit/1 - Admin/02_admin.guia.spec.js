@@ -52,18 +52,6 @@ test("Should update a guide", async ({ client }) => {
   response.assertStatus(200);
 });
 
-test("Should not update a guide because the admin is not authenticated", async ({
-  client,
-}) => {
-  const response = await client
-    .put("/guia/edit/1")
-    .send({
-      description: "ATUALIZAÇÃO da descrição do guia",
-    })
-    .end();
-  response.assertStatus(401);
-});
-
 test("Should not update a guide because the guide do not exist", async ({
   client,
 }) => {

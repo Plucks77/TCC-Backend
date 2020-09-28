@@ -194,6 +194,6 @@ test("Should list all packages", async ({ client }) => {
 test("Should not list all packages because the admin is not authenticated", async ({
   client,
 }) => {
-  const response = await client.get("/pacote/1").end();
+  const response = await client.get("/pacotes").end();
   response.assertStatus(401);
 });
