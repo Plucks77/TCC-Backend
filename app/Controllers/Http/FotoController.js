@@ -34,7 +34,7 @@ class FotoController {
       await Drive.disk("s3").delete(key);
       return response.send({ message: "Imagem excluída com sucesso!" });
     } catch (erro) {
-      return response.status(400).send({ erro });
+      return response.status(400).send({ erro: erro.message });
     }
   }
 }
