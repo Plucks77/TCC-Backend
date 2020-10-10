@@ -70,8 +70,8 @@ Route.delete("/foto/delete/:id", "PacoteFotoController.delete").middleware("auth
 Route.get("/fotos/pacote/:pacote_id", "PacoteFotoController.getFotos").middleware("auth:admin,auth:jwt");
 
 //Foto
-Route.post("/envia/foto/:local", "FotoController.create").middleware("auth:admin");
-Route.delete("/delete/foto", "FotoController.delete").middleware("auth:admin");
+Route.post("/envia/foto/:local", "FotoController.create").middleware("auth:admin,auth:guia");
+Route.delete("/delete/foto", "FotoController.delete").middleware("auth:admin,auth:guia");
 
 //City
 Route.get("/cities", "CityController.list").middleware("auth:admin,auth:jwt");
